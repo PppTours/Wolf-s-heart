@@ -1,3 +1,7 @@
+/**
+*   @brief L caméra suit le joueur
+*/
+
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour

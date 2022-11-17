@@ -1,3 +1,7 @@
+/**
+*   @brief Change l'affichage de la barre de vie en fonction de la vie du joueur
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
 
