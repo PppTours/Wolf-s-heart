@@ -7030,8 +7030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 937200421}
-  enemy: {fileID: 0}
-  enemyPatrol: {fileID: 1536421139}
+  enemyPatrol: {fileID: 0}
 --- !u!1 &200724442
 GameObject:
   m_ObjectHideFlags: 0
@@ -7644,7 +7643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 250
-  jumpForce: 300
+  jumpForce: {x: 0, y: 300}
   groundCheck: {fileID: 1243120574}
   groundCheckRadius: 0.2
   collisionLayers:
@@ -8157,8 +8156,8 @@ GameObject:
   - component: {fileID: 1536421138}
   - component: {fileID: 1536421141}
   - component: {fileID: 1536421140}
-  - component: {fileID: 1536421139}
   - component: {fileID: 1536421142}
+  - component: {fileID: 1536421143}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -8183,29 +8182,6 @@ Transform:
   m_Father: {fileID: 1150043666}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1536421139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536421137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a675a3e529053e49b857c21194c7a4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  waypoints:
-  - {fileID: 1857489253}
-  - {fileID: 1143895270}
-  borderPoint1: {fileID: 1770619140}
-  borderPoint2: {fileID: 1423007515}
-  damageOnCollision: 20
-  graphics: {fileID: 1536421141}
-  target: {fileID: 0}
-  isPursue: 0
-  isReturnPatrol: 0
 --- !u!61 &1536421140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8304,6 +8280,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1536421143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536421137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a675a3e529053e49b857c21194c7a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  waypoints:
+  - {fileID: 1857489253}
+  - {fileID: 1143895270}
+  borderPoint1: {fileID: 1770619140}
+  borderPoint2: {fileID: 1423007515}
+  damageOnCollision: 20
+  graphics: {fileID: 1536421141}
+  target: {fileID: 0}
+  isPursue: 0
+  isReturnPatrol: 0
 --- !u!1 &1617324390
 GameObject:
   m_ObjectHideFlags: 0

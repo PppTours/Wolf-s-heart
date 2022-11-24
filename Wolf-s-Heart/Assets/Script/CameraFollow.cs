@@ -1,5 +1,5 @@
 /**
-*   @brief L caméra suit le joueur
+*   @brief La caméra suit le joueur
 */
 
 using UnityEngine;

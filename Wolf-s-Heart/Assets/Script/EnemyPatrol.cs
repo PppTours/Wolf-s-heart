@@ -2,19 +2,17 @@
 *   @brief Déplacements de l'ennemi 
 */
 
-
 using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
     public float speed;
     public Transform[] waypoints;  // liste des points vers lesquels se dirige l'ennemi
-
-/* points réprésentant la limite de déplacement de l'ennemi */
+    /* points réprésentant la limite de déplacement de l'ennemi */
     public Transform borderPoint1;
     public Transform borderPoint2;
 
-    public int damageOnCollision = 20;
+    public int damageOnAttack = 20;
 
     public SpriteRenderer graphics;
     public Transform target;    // point vers lequel se dirige l'ennemi
@@ -22,27 +20,29 @@ public class EnemyPatrol : MonoBehaviour
 
     public bool isPursue = false;
     public bool isReturnPatrol = false;
+    public int isAttacking = 0;   // états de l'attaque (0 = n'attaque pas, 1 = prépare l'attaque, 2 = attaque, 3 = repos de fin d'attque)
 
     void Start()
     {
         target = waypoints[0];
     }
 
-
     void Update()
     {
-        Vector3 dir = Vector3.right * (target.position.x - transform.position.x);
-        transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
-
+        if (isAttacking == 0)
+        {
+            Vector3 dir = Vector3.right * (target.position.x - transform.position.x);
+            transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+            Flip(dir.x);
+        }
     /* si proche du point vers lequel il se dirige et ne poursuit pas le joueur : se dirige vers le prochain point */
         if((Vector3.Distance(transform.position, target.position) < 0.3f) && !isPursue){
             destPoint = (destPoint+1) % waypoints.Length;
             target = waypoints[destPoint];
         }
         
-        Flip(dir.x);
 
-    /* si proche de sa limite de déplacement : abandonne la poursuite */ 
+    /* si proche de sa limite de déplacement : abandonne la poursuite */
         if ((Vector3.Distance(transform.position, borderPoint1.position) < 0.3f) || (Vector3.Distance(transform.position, borderPoint2.position) < 0.3f))
         {
             isPursue = false;
@@ -70,11 +70,11 @@ public class EnemyPatrol : MonoBehaviour
     /**
     *   @brief Donne des dégâts au joueur si collision avec l'ennemi
     *   @param collision : (Collision2D) Objet qui est entré en collision avec l'ennemi
-    */
-    public void OnCollisionEnter2D(Collision2D collision){
+    *//*
+    public void OnCollisionExit2D(Collision2D collision){
         if (collision.transform.CompareTag("Player")) {
             PlayerHealth playerHealth = collision.transform.GetComponent<PlayerHealth>();
             playerHealth.TakeDamage(damageOnCollision);
         }
-    }
+    }*/
 }
