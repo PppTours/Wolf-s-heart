@@ -17,9 +17,14 @@ public class ChampsVision : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) {
-            enemyPatrol.target = player;
-            enemyPatrol.isPursue = true;
+            Poursuivre();
         }
+    }
+
+    public void Poursuivre()
+    {
+        enemyPatrol.target = player;
+        enemyPatrol.isPursue = true;
     }
 
     /**
@@ -29,8 +34,13 @@ public class ChampsVision : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) {
-            enemyPatrol.target = enemyPatrol.waypoints[0];
-            enemyPatrol.isPursue = false;
+            ArreterPoursuite();
         }
+    }
+
+    public void ArreterPoursuite()
+    {
+        enemyPatrol.target = enemyPatrol.waypoints[0];
+        enemyPatrol.isPursue = false;
     }
 }

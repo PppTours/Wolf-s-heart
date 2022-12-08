@@ -7,76 +7,67 @@ using System.Collections;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public float beforeAttackTime = 1f;   // temps de préparation de l'attaque
-    public float attackTime = 1f; // temps de l'attaque
-    public float afterAttackTime = 1f; // temps de repos après l'attaque
+    public float beforeAttackTime;   // temps de préparation de l'attaque
+    public float afterAttackTime; // temps de repos après l'attaque
+
+    private bool onCollider = false;
     
     public PlayerHealth playerHealth;
     public EnemyPatrol enemyPatrol;
+    public ChampsVision champsVision;
+
+    public void Start()
+    {
+        beforeAttackTime = 1f;
+        afterAttackTime = 1f;
+    }
 
     /**
     *   @brief L'ennemi commence le processus d'attaque et attaque le joueur si celui-ci est dans la zone d'attaque
     *   @param collision : (Collision2D) Objet qui est entré dans la zone d'attaqe de l'ennemi
     */
-    public void OnTriggerStay2D(Collider2D collision)
+    public void Update()
     {
-        if (collision.transform.CompareTag("Player") && enemyPatrol.isAttacking == 0) {
+        if (onCollider && enemyPatrol.isAttacking == 0) {
+            enemyPatrol.isAttacking = 1;
+            champsVision.Poursuivre();
             StartCoroutine(WaitBeforeAttack());
         }
 
-        if(collision.transform.CompareTag("Player")/* && enemyPatrol.isAttacking == 2*/) {
-            Debug.Log("Attack!");
-            playerHealth.TakeDamage(enemyPatrol.damageOnAttack);
+        if(enemyPatrol.isAttacking == 2) {
+            if (onCollider) {
+                Debug.Log("Attack!");
+                playerHealth.TakeDamage(enemyPatrol.damageOnAttack);
+            }
+            enemyPatrol.isAttacking = 3;
+            StartCoroutine(WaitAfterAttack());
         }
     }
 
-    
-
-    /**
-    *   @brief L'ennemi attaque le joueur si celui-ci est toujours dans la zone d'attaque
-    *   @param collision : (Collision2D) Objet qui est entré dans la zone d'attaqe de l'ennemi
-    *//*
-    public void OnTriggerStay2D(Collider2D collision) {
-        
-    }*/
-    /*
-    void Attacking()
+        public void OnTriggerEnter2D(Collider2D collision)
     {
-        enemyPatrol.isAttacking = 2;
-
-        if (TryGetComponent(out Transform collision)) {
-            if (collision.CompareTag("Player")) {
-                Debug.Log("Attack!");
-                playerHealth.TakeDamage(20);
-            }
+        if (collision.transform.CompareTag("Player")) {
+            onCollider = true;
         }
-        
-        StartCoroutine(WaitAfterAttack());
-    }*/
+    }
+
+     public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player")) {
+            onCollider = false;
+        }
+    }
 
     public IEnumerator WaitBeforeAttack()
     {  
-        enemyPatrol.isAttacking = 1;
-        Debug.Log("PrepAttack");
-
         yield return new WaitForSeconds(beforeAttackTime);
-        //Attacking();
-        StartCoroutine(WaitAttack());
-    }
-
-    public IEnumerator WaitAttack()
-    {
         enemyPatrol.isAttacking = 2;
-        Debug.Log("Hello");
-        yield return new WaitForSeconds(attackTime);
-        StartCoroutine(WaitAfterAttack());
     }
 
     public IEnumerator WaitAfterAttack()
     {
-        enemyPatrol.isAttacking = 3;
-        Debug.Log("Sleep");
         yield return new WaitForSeconds(afterAttackTime);
         enemyPatrol.isAttacking = 0;
+        enemyPatrol.graphics.color = new Color(1f,1f,1f,1f);
     }
 }
