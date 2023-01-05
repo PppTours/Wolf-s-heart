@@ -12,6 +12,7 @@ public class PlayerMouvement : MonoBehaviour
 
     private bool isJumping;
     private bool isGrounded;
+    public bool isAttacking = false;
 
 /* zone qui détècte si en contact avec le sol */
     public Transform groundCheck;
@@ -44,7 +45,9 @@ public class PlayerMouvement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayers);
         horizontalMovement = Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime;
 
-        MovePlayer(horizontalMovement);
+        if (!isAttacking) {
+            MovePlayer(horizontalMovement);
+        }
     }
 
     /**

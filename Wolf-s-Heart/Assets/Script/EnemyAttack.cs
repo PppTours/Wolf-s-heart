@@ -4,58 +4,64 @@
 
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public float beforeAttackTime;   // temps de préparation de l'attaque
-    public float afterAttackTime; // temps de repos après l'attaque
+    private float beforeAttackTime;   // temps de préparation de l'attaque
+    private float afterAttackTime; // temps de repos après l'attaque
 
-    private bool onCollider = false;
+    public int damageOnAttack = 20;
+
+    private Transform player;
+    private GameObject enemy;
+    private BoxCollider2D zoneAttaque;
     
     public PlayerHealth playerHealth;
+    public EnemyHealth enemyHealth;
     public EnemyPatrol enemyPatrol;
-    public ChampsVision champsVision;
 
     public void Start()
     {
         beforeAttackTime = 1f;
         afterAttackTime = 1f;
+        
+        enemy= GameObject.Find("EnemyAttack");
+        player = GameObject.Find("Vinru").transform;
+        zoneAttaque = enemy.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D;
     }
 
     /**
-    *   @brief L'ennemi commence le processus d'attaque et attaque le joueur si celui-ci est dans la zone d'attaque
-    *   @param collision : (Collision2D) Objet qui est entré dans la zone d'attaqe de l'ennemi
+    *   @brief L'ennemi attaque le joueur si celui-ci est à proté
     */
     public void Update()
     {
-        if (onCollider && enemyPatrol.isAttacking == 0) {
-            enemyPatrol.isAttacking = 1;
-            champsVision.Poursuivre();
-            StartCoroutine(WaitBeforeAttack());
-        }
-
         if(enemyPatrol.isAttacking == 2) {
-            if (onCollider) {
-                Debug.Log("Attack!");
-                playerHealth.TakeDamage(enemyPatrol.damageOnAttack);
+            if (!enemyHealth.isInvisible) {
+            //si le joueur est à porté
+            if (Math.Sqrt(Math.Pow(player.position.x-(enemy.transform.position.x+zoneAttaque.offset.x),2)+Math.Pow(player.position.y-(enemy.transform.position.y+zoneAttaque.offset.y),2)) <= zoneAttaque.size.x) {
+                playerHealth.TakeDamage(damageOnAttack);
             }
             enemyPatrol.isAttacking = 3;
             StartCoroutine(WaitAfterAttack());
+            }
+            else {
+                enemyPatrol.isAttacking = 0;
+            }
         }
     }
 
-        public void OnTriggerEnter2D(Collider2D collision)
+    /**
+    *   @brief L'ennemi commence le processus d'attaque
+    *   @param collision : (Collision2D) Objet qui est entré dans la zone d'attaqe de l'ennemi
+    */
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player")) {
-            onCollider = true;
+        if (enemyPatrol.isAttacking == 0) {
+            enemyPatrol.isAttacking = 1;
+            StartCoroutine(WaitBeforeAttack());
         }
-    }
-
-     public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player")) {
-            onCollider = false;
-        }
+       
     }
 
     public IEnumerator WaitBeforeAttack()
@@ -68,6 +74,5 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(afterAttackTime);
         enemyPatrol.isAttacking = 0;
-        enemyPatrol.graphics.color = new Color(1f,1f,1f,1f);
     }
 }

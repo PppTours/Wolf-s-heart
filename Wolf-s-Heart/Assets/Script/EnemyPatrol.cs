@@ -12,7 +12,6 @@ public class EnemyPatrol : MonoBehaviour
     public Transform borderPoint1;
     public Transform borderPoint2;
 
-    public int damageOnAttack = 20;
 
     public SpriteRenderer graphics;
     public Transform target;    // point vers lequel se dirige l'ennemi
@@ -21,6 +20,8 @@ public class EnemyPatrol : MonoBehaviour
     public bool isPursue = false;
     public bool isReturnPatrol = false;
     public int isAttacking = 0;   // états de l'attaque (0 = n'attaque pas, 1 = prépare l'attaque, 2 = attaque, 3 = repos de fin d'attque)
+   
+    public EnemyHealth enemyHealth;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
-        if (isAttacking == 0)
+        if (isAttacking == 0 && !enemyHealth.isInvisible)
         {
             Vector3 dir = Vector3.right * (target.position.x - transform.position.x);
             transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
