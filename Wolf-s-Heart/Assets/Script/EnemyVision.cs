@@ -14,9 +14,9 @@ public class EnemyVision : MonoBehaviour
     *   @brief Passe l'ennemi en mode poursuite si le joueur entre dans le champ de vision de l'ennemi
     *   @param collision : (Collision2D) Objet qui est entré dans le champ de vision de l'ennemi
     */
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) {
+        if (collision.CompareTag("Player") && enemyPatrol.isPursue == false) {
             Poursuivre();
         }
     }

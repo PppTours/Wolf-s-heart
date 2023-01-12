@@ -43,12 +43,14 @@ public class EnemyPatrol : MonoBehaviour
         }
         
 
-    /* si proche de sa limite de déplacement : abandonne la poursuite */
-        if ((Vector3.Distance(transform.position, borderPoint1.position) < 0.3f) || (Vector3.Distance(transform.position, borderPoint2.position) < 0.3f))
+    /* si proche de sa limite de déplacement quand il poursuit le joueur : ne peut pas aller plus loin */
+        if ((Vector3.Distance(transform.position, borderPoint1.position) < 0.3f) && isPursue)
         {
-            isPursue = false;
-            isReturnPatrol = true;
-            target = waypoints[destPoint];
+            target = borderPoint1;
+        }
+        else if((Vector3.Distance(transform.position, borderPoint2.position) < 0.3f) && isPursue)
+        {
+            target = borderPoint2;
         }
     }
 
