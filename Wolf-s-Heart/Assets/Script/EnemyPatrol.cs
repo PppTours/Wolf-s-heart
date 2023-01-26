@@ -12,11 +12,10 @@ public class EnemyPatrol : MonoBehaviour
     public Transform borderPoint1;
     public Transform borderPoint2;
 
-
-    public SpriteRenderer graphics;
     public Transform target;    // point vers lequel se dirige l'ennemi
+    public SpriteRenderer graphics;
     private int destPoint = 0;  // indice de waypoints
-
+    
     public bool isPursue = false;
     public bool isReturnPatrol = false;
     public int isAttacking = 0;   // états de l'attaque (0 = n'attaque pas, 1 = prépare l'attaque, 2 = attaque, 3 = repos de fin d'attque)

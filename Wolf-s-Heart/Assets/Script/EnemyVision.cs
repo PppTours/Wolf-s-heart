@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class EnemyVision : MonoBehaviour
 {
-    public Transform player;
     public EnemyPatrol enemyPatrol;
 
+    private Transform player;
+
+    public void Start()
+    {
+        player = GameObject.Find("Vinru").transform;
+    }
 
     /**
     *   @brief Passe l'ennemi en mode poursuite si le joueur entre dans le champ de vision de l'ennemi

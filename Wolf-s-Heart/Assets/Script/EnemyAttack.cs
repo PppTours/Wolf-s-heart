@@ -17,11 +17,11 @@ public class EnemyAttack : MonoBehaviour
     private GameObject enemy;
     private BoxCollider2D zoneAttaque;
     
-    public PlayerHealth playerHealth;
+    private PlayerHealth playerHealth;
     public EnemyHealth enemyHealth;
     public EnemyPatrol enemyPatrol;
 
-    public void Start()
+    public void Awake()
     {
         beforeAttackTime = 1f;
         afterAttackTime = 1f;
@@ -29,6 +29,7 @@ public class EnemyAttack : MonoBehaviour
         enemy= GameObject.Find("EnemyAttack");
         player = GameObject.Find("Vinru").transform;
         zoneAttaque = enemy.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        playerHealth = GameObject.Find("Vinru").GetComponent<PlayerHealth>();
     }
 
     /**
