@@ -21,7 +21,7 @@ public class PlayerMouvement : MonoBehaviour
     
     public Rigidbody2D rb;
     public Animator animator;
-    public SpriteRenderer spriteRenderer;
+    public Transform transformPlayer;
 
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
@@ -33,8 +33,6 @@ public class PlayerMouvement : MonoBehaviour
             isJumping = true;
         }
 
-        Flip(rb.velocity.x);
-
     /* envoi de la vitesse de déplacement à l'animateur */
         float characterVelocity = Mathf.Abs(rb.velocity.x);
         animator.SetFloat("Speed", characterVelocity);
@@ -44,10 +42,9 @@ public class PlayerMouvement : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayers);
         horizontalMovement = Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime;
-
-        if (!isAttacking) {
-            MovePlayer(horizontalMovement);
-        }
+        
+        Flip(horizontalMovement);
+        MovePlayer(horizontalMovement);
     }
 
     /**
@@ -70,15 +67,15 @@ public class PlayerMouvement : MonoBehaviour
     *   @brief Change l'orientation du graphisme du joueur en fonction de sa diraction de déplacement
     *   @param _dir : (float) Direction de déplacement du joueur sur l'axe x
     */
-    void Flip(float _velocity)
+    void Flip(float _horizontalMovement)
     {
-        if (_velocity < -0.1f)
+        if (_horizontalMovement < -0.1f)
         {
-            spriteRenderer.flipX = false;
+            transformPlayer.localScale = new Vector3(1, 1, 1);
         }
-        else if (_velocity > 0.1f)
+        else if (_horizontalMovement > 0.1f)
         {
-            spriteRenderer.flipX = true;
+            transformPlayer.localScale = new Vector3(-1, 1, 1);
         }
     }
 /*#################################################################*/

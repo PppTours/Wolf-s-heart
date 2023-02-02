@@ -154,12 +154,12 @@ MonoBehaviour:
   - {fileID: 2997748241171724969}
   borderPoint1: {fileID: 2997748241903144779}
   borderPoint2: {fileID: 2997748241453846868}
-  graphics: {fileID: 2997748241667859290}
   target: {fileID: 0}
   isPursue: 0
   isReturnPatrol: 0
   isAttacking: 0
   enemyHealth: {fileID: 2997748241667859287}
+  transformEnemy: {fileID: 2997748241667859293}
 --- !u!114 &2997748241667859287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.6542006, y: 0.45449173}
+  m_Offset: {x: -2.549345, y: -0.023596883}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -395,7 +395,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.504896, y: 4.5403967}
+  m_Size: {x: 6.7146072, y: 2.8518288}
   m_EdgeRadius: 0
 --- !u!114 &2997748242273052596
 MonoBehaviour:
@@ -409,7 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ab691719bc96c4f9829a418a8d3c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   enemyPatrol: {fileID: 2997748241667859288}
 --- !u!1 &2997748242959432085
 GameObject:
@@ -457,7 +456,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.1519299, y: -0.07768941}
+  m_Offset: {x: -1.2841673, y: -0.3828522}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -468,7 +467,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 2}
+  m_Size: {x: 3.2355251, y: 1.3896744}
   m_EdgeRadius: 0
 --- !u!114 &2997748242959432083
 MonoBehaviour:
@@ -483,6 +482,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOnAttack: 20
-  playerHealth: {fileID: 0}
   enemyHealth: {fileID: 2997748241667859287}
   enemyPatrol: {fileID: 2997748241667859288}

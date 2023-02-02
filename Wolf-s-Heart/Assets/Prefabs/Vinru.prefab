@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602713191700669673}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.8, y: -1.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Bits: 1
   rb: {fileID: 1602713191700669666}
   animator: {fileID: 1602713191700669677}
-  spriteRenderer: {fileID: 1602713191700669679}
+  transformPlayer: {fileID: 1602713191700669678}
 --- !u!114 &1602713191700669665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOnAttack: 20
-  enemyHealth: {fileID: 0}
   playerHealth: {fileID: 1602713191700669665}
   playerMouvement: {fileID: 1602713191700669672}
 --- !u!212 &1602713191700669679
@@ -204,8 +203,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.027465327, y: -0.17070988}
-  m_Size: {x: 2.935069, y: 1.856838}
+  m_Offset: {x: 0.09022712, y: -0.17070988}
+  m_Size: {x: 2.427056, y: 1.856869}
   m_Direction: 1
 --- !u!1 &1602713193561298726
 GameObject:
@@ -263,7 +262,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.909623, y: 2.9180274}
+  m_Size: {x: 5, y: 3}
   m_EdgeRadius: 0
 --- !u!1 &1602713193675926646
 GameObject:

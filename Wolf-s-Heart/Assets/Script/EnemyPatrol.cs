@@ -13,7 +13,6 @@ public class EnemyPatrol : MonoBehaviour
     public Transform borderPoint2;
 
     public Transform target;    // point vers lequel se dirige l'ennemi
-    public SpriteRenderer graphics;
     private int destPoint = 0;  // indice de waypoints
     
     public bool isPursue = false;
@@ -21,6 +20,7 @@ public class EnemyPatrol : MonoBehaviour
     public int isAttacking = 0;   // états de l'attaque (0 = n'attaque pas, 1 = prépare l'attaque, 2 = attaque, 3 = repos de fin d'attque)
    
     public EnemyHealth enemyHealth;
+    public Transform transformEnemy;
 
     void Start()
     {
@@ -61,11 +61,11 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (_dir < -0.1f)
         {
-            graphics.flipX = true;
+            transformEnemy.localScale = new Vector3(1,1,1);
         }
         else if (_dir > 0.1f)
         {
-            graphics.flipX = false;
+            transformEnemy.localScale = new Vector3(-1,1,1);
         }
     }
 

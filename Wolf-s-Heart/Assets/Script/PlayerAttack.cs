@@ -11,21 +11,35 @@ public class PlayerAttack : MonoBehaviour
     private float attackTime = 0.5f;   //temps d'execution de l'attaque
 
     public int damageOnAttack = 20;
-
+/*
     private Transform enemy;
     private GameObject player;
-    private BoxCollider2D zoneAttaque;
+    private BoxCollider2D zoneAttaque;*/
     
-    public EnemyHealth enemyHealth;
+    private EnemyHealth enemyHealth;
     public PlayerHealth playerHealth;
     public PlayerMouvement playerMouvement;
-    
+    /*
     public void Start()
     {
         player = GameObject.Find("PlayerAttack");
         enemy = GameObject.Find("Enemy/Graphics").transform;
         zoneAttaque = player.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+    }*/
+
+    private void OnTriggerStay2D(Collider2D collision) {
+        if (collision.CompareTag("Enemy")) {
+            enemyHealth = collision.GetComponent<EnemyHealth>();
+            //si le joueur attaque
+            if (playerMouvement.isAttacking) {
+                //si l'ennemi n'est pas invisible
+                if (!enemyHealth.isInvisible) {
+                    enemyHealth.TakeDamage(damageOnAttack);
+                }
+            }
+        }
     }
+
     /**
     *   @brief Le joueur attaque
     */
@@ -33,9 +47,6 @@ public class PlayerAttack : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && !playerHealth.isInvisible) {
             playerMouvement.isAttacking = true;
-            if (Math.Sqrt(Math.Pow(enemy.position.x-(player.transform.position.x+zoneAttaque.offset.x),2)+Math.Pow(enemy.position.y-(player.transform.position.y+zoneAttaque.offset.y),2)) <= zoneAttaque.size.x) {  
-                enemyHealth.TakeDamage(damageOnAttack);
-            }
             StartCoroutine(WaitAttack());
         }
 /*
