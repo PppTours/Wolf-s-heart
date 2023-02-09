@@ -11,8 +11,9 @@ public class PlayerMouvement : MonoBehaviour
     public Vector2 jumpForce;
 
     private bool isJumping;
-    private bool isGrounded;
+    public bool isGrounded;
     public bool isAttacking = false;
+    public bool isClimbing = false;
 
 /* zone qui détècte si en contact avec le sol */
     public Transform groundCheck;
@@ -25,6 +26,7 @@ public class PlayerMouvement : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
+    private float verticalMovement;
 
     void Update()
     {
@@ -42,24 +44,34 @@ public class PlayerMouvement : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayers);
         horizontalMovement = Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime;
-        
+        verticalMovement = Input.GetAxis("Vertical")*moveSpeed*Time.deltaTime;
+
         Flip(horizontalMovement);
-        MovePlayer(horizontalMovement);
+        MovePlayer(horizontalMovement, verticalMovement);
     }
 
     /**
     *   @brief Déplacement du rigidBody
     *   @param _horizontalMovement : (float) Valeur de déplacement du joueur sur l'axe x
     */
-    void MovePlayer(float _horizontalMovement)
+    void MovePlayer(float _horizontalMovement, float _verticalMovement)
     {
-        Vector3 targetVelocity = new Vector2(_horizontalMovement, rb.velocity.y);
-        rb.velocity = Vector3.SmoothDamp(rb.velocity,targetVelocity, ref velocity, .05f);
+        //déplacement vertical
+        if (isClimbing){
+           Vector3 targetVelocity = new Vector2(rb.velocity.x, _verticalMovement);
+            rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
+            
+        }
+        //déplacement horizontal
+        else {
+            Vector3 targetVelocity = new Vector2(_horizontalMovement, rb.velocity.y);
+            rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
 
-        if(isJumping == true)
-        {
-            rb.AddForce(jumpForce);
-            isJumping = false;
+            if(isJumping)
+            {
+                rb.AddForce(jumpForce);
+                isJumping = false;
+            }
         }
     }
 
@@ -79,10 +91,10 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 /*#################################################################*/
-    private void OnDrawGizmos()
+ /*   private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
+    }*/
 /*#################################################################*/
 }

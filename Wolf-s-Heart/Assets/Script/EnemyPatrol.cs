@@ -68,15 +68,4 @@ public class EnemyPatrol : MonoBehaviour
             transformEnemy.localScale = new Vector3(-1,1,1);
         }
     }
-
-    /**
-    *   @brief Donne des dégâts au joueur si collision avec l'ennemi
-    *   @param collision : (Collision2D) Objet qui est entré en collision avec l'ennemi
-    *//*
-    public void OnCollisionExit2D(Collision2D collision){
-        if (collision.transform.CompareTag("Player")) {
-            PlayerHealth playerHealth = collision.transform.GetComponent<PlayerHealth>();
-            playerHealth.TakeDamage(damageOnCollision);
-        }
-    }*/
 }

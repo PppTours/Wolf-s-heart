@@ -13,6 +13,7 @@ public class PickUp : MonoBehaviour
     {
         if (collider.CompareTag("Player")) {
             Inventory.instance.AddCoins(1);
+            
             Destroy(gameObject);
         }
     }

@@ -63,42 +63,6 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void Attack(Collider2D _collision) {
-        //si l'ennemi est prêt à attaquer
-            if (enemyPatrol.isAttacking == 2) {
-                
-            }
-    }
-
-    /**
-    *   @brief L'ennemi attaque le joueur si celui-ci est à porté
-    *//*
-    public void Update()
-    {
-        if(enemyPatrol.isAttacking == 2) {
-            if (!enemyHealth.isInvisible) {
-            //si le joueur est à porté
-            if (Math.Sqrt(Math.Pow(player.position.x-(enemy.transform.position.x+zoneAttaque.offset.x),2)+Math.Pow(player.position.y-(enemy.transform.position.y+zoneAttaque.offset.y),2)) <= zoneAttaque.size.x) {
-                playerHealth.TakeDamage(damageOnAttack);
-            }
-            enemyPatrol.isAttacking = 3;
-            StartCoroutine(WaitAfterAttack());
-            }
-            else {
-                enemyPatrol.isAttacking = 0;
-            }
-        }
-    }*/
-
-    /**
-    *   @brief L'ennemi commence le processus d'attaque
-    *   @param collision : (Collision2D) Objet qui est entré dans la zone d'attaqe de l'ennemi
-    *//*
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-       
-    }*/
-
     public IEnumerator WaitBeforeAttack()
     {  
         yield return new WaitForSeconds(beforeAttackTime);

@@ -8,11 +8,13 @@ using System.Collections;
 public class Inventory : MonoBehaviour
 {
     public int coinsCount;
-    public float showCoinsTime;
     public Text CoinsCountText;
     public GameObject coinsCountObject;
 
     public static Inventory instance;
+
+    private float showCoinsTime;
+    private int nbCoroutines;
 
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class Inventory : MonoBehaviour
         }
 
         instance = this;
+        showCoinsTime = 5f;
+        nbCoroutines = 0;
         coinsCountObject.SetActive(false);
     }
 
@@ -33,8 +37,13 @@ public class Inventory : MonoBehaviour
 
     public IEnumerator ShowCoins()
     {
+        nbCoroutines++;
         coinsCountObject.SetActive(true);
         yield return new WaitForSeconds(showCoinsTime);
-        coinsCountObject.SetActive(false);
+        nbCoroutines--;
+        //éviter que l'affichage disparaisse showCoinsTime apres avoir récupéré une pièce mais le joueur en à récupéré d'autres entre temps
+        if (nbCoroutines == 0) {
+            coinsCountObject.SetActive(false);
+        }
     }
 }
