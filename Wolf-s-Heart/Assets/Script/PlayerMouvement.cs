@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerMouvement : MonoBehaviour
 {
     public float moveSpeed;
+    public float climbSpeed;
     public Vector2 jumpForce;
 
     private bool isJumping;
@@ -15,10 +16,12 @@ public class PlayerMouvement : MonoBehaviour
     public bool isAttacking = false;
     public bool isClimbing = false;
 
-/* zone qui détècte si en contact avec le sol */
+    /* zone qui détècte si en contact avec le sol */
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask collisionLayers;
+
+    public Collider2D playerCollider;
     
     public Rigidbody2D rb;
     public Animator animator;
@@ -27,6 +30,16 @@ public class PlayerMouvement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
     private float verticalMovement;
+
+    public static PlayerMouvement instance;
+
+    private void Awake() {
+        if (instance != null) {
+            Debug.LogWarning("Il y a plus d'une instance PlayerMouvement dans la scène.");
+            return;
+        }
+        instance = this;
+    }
 
     void Update()
     {
@@ -44,7 +57,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayers);
         horizontalMovement = Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime;
-        verticalMovement = Input.GetAxis("Vertical")*moveSpeed*Time.deltaTime;
+        verticalMovement = Input.GetAxis("Vertical")*climbSpeed*Time.deltaTime;
 
         Flip(horizontalMovement);
         MovePlayer(horizontalMovement, verticalMovement);
@@ -58,7 +71,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         //déplacement vertical
         if (isClimbing){
-           Vector3 targetVelocity = new Vector2(rb.velocity.x, _verticalMovement);
+           Vector3 targetVelocity = new Vector2(0, _verticalMovement);
             rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
             
         }

@@ -52,14 +52,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d953d50e4abd0c04882b4f8b16fc57da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 300
+  moveSpeed: 350
+  climbSpeed: 200
   jumpForce: {x: 0, y: 300}
+  isGrounded: 0
   isAttacking: 0
+  isClimbing: 0
   groundCheck: {fileID: 1602713193675926645}
   groundCheckRadius: 0.2
   collisionLayers:
     serializedVersion: 2
     m_Bits: 1
+  playerCollider: {fileID: 1602713191700669664}
   rb: {fileID: 1602713191700669666}
   animator: {fileID: 1602713191700669677}
   transformPlayer: {fileID: 1602713191700669678}
@@ -137,7 +141,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 897176981, guid: 1ebe96008a0c91348aed247e144df25f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

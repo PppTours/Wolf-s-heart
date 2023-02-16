@@ -18,19 +18,39 @@ public class PlayerHealth : MonoBehaviour
     public SpriteRenderer graphics;
     public HealthBar healthBar;
 
-    void Start()
+    public static PlayerHealth instance;
+
+    private void Awake()
     {
+        if (instance != null) {
+            Debug.LogWarning("Il y a plus d'une instance PlayerHealth dans la scène.");
+            return;
+        }
+
+        instance = this;
+
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(20);
         }
+    }
+
+    /**
+    *   @brief Rendre de la vie au joueur
+    *   @param amount : (int) quantité des vie reçus
+    */
+    public void HealPlayer(int amount) {
+            currentHealth += amount;
+            if (currentHealth > maxHealth) {
+                currentHealth = maxHealth;
+            }
+            healthBar.SetHealth(currentHealth);
     }
 
     /**
@@ -43,9 +63,23 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+
+            //vérifier si le joueur a toujours des point de vie
+            if (currentHealth <= 0) {
+                Die();
+                return;
+            }
+
             isInvisible = true;
             StartCoroutine(InvincibilityFlash());
         }
+    }
+
+    public void Die() {
+        PlayerMouvement.instance.enabled  = false;
+        PlayerMouvement.instance.animator.SetTrigger("Die");
+        PlayerMouvement.instance.rb.bodyType = RigidbodyType2D.Kinematic;
+        PlayerMouvement.instance.playerCollider.enabled = false;
     }
 
     /**

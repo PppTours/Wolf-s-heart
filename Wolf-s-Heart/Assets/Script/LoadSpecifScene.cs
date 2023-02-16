@@ -10,15 +10,28 @@ using UnityEngine.SceneManagement;
 public class LoadSpecifScene : MonoBehaviour
 {
     public string sceneName;
-    public Animator fadeSystem;
-/*
+    private Animator fadeSystem;
+    private bool isInRange = false;
+
     private void Awake() {
         fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
     }
-*/
+
+    private void Update() {
+        if (isInRange && Input.GetKeyDown(KeyCode.E)) {
+            StartCoroutine(loadNextScene());
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
-            StartCoroutine(loadNextScene());
+            isInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
+            isInRange = false;
         }
     }
 
