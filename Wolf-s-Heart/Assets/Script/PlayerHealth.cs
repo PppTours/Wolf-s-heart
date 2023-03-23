@@ -1,5 +1,5 @@
 /**
-*   @brief Actions en rapport à la vie du joueur
+*   @brief Actions en rapport à la vie du joueur et mort du joueur
 */
 
 
@@ -66,20 +66,13 @@ public class PlayerHealth : MonoBehaviour
 
             //vérifier si le joueur a toujours des point de vie
             if (currentHealth <= 0) {
-                Die();
+                DeathManager.instance.Die();
                 return;
             }
 
             isInvisible = true;
             StartCoroutine(InvincibilityFlash());
         }
-    }
-
-    public void Die() {
-        PlayerMouvement.instance.enabled  = false;
-        PlayerMouvement.instance.animator.SetTrigger("Die");
-        PlayerMouvement.instance.rb.bodyType = RigidbodyType2D.Kinematic;
-        PlayerMouvement.instance.playerCollider.enabled = false;
     }
 
     /**

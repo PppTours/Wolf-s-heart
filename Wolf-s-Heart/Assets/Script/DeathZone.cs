@@ -15,6 +15,10 @@ public class DeathZone : MonoBehaviour
         fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
     }
 
+    /**
+    *   @brief Replacement du jour
+    *   @param collision : objet en contact avecla zone
+    */
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
             StartCoroutine(ReplacePlayer(collision));
